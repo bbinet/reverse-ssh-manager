@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 2.7",
         ],
     entry_points={
-        'console_scripts': ['reverse-ssh-server=rss:run']
+        'console_scripts': ['reverse-ssh-server=rss.server:run']
         },
     packages=find_packages(),
     include_package_data=True,
