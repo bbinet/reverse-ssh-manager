@@ -90,7 +90,7 @@ def update(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
     db[uuid].update(netstat(db[uuid]['port']))
-    db[uuid]['active'] = bottle.request.query['active'] == 'true'
+    db[uuid]['active'] = bottle.request.json['active'] is True
     if not db[uuid]['active']:
         terminate(uuid)
     return db[uuid]
