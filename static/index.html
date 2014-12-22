@@ -10,6 +10,7 @@
     <!-- Angular -->
     <!-- build:js js/app.min.js -->
     <script src="vendor/angular/angular.js"></script>
+    <script>ng = angular;</script>
     <script src="vendor/angular-toggle-switch/angular-toggle-switch.js"></script>
     <script src="vendor/angular-smart-table/src/smart-table.module.js"></script>
     <script src="vendor/angular-smart-table/src/stTable.js"></script>
@@ -27,5 +28,32 @@
   </head>
 
   <body ng-controller="MainCtrl">
+
+    <table st-table="displayedCollection" st-safe-src="internalCollection" class="table table-striped">
+      <thead>
+        <tr>
+          <th st-sort="uuid">UUID</th>
+          <th st-sort="name">Name</th>
+          <th st-sort="port">Port</th>
+          <th st-sort="time">Last check</th>
+          <th st-sort="active">Status</th>
+          <th st-sort="established">Connections established</th>
+        </tr>
+        <tr>
+          <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in displayedCollection">
+          <td>{{row.uuid}}</td>
+          <td>{{row.name}}</td>
+          <td>{{row.port}}</td>
+          <td>{{row.time * 1000 | date:'yy-MM-dd HH:mm:ss'}}</td>
+          <td>{{row.active}}</td>
+          <td>{{row.established}}</td>
+        </tr>
+      </tbody>
+    </table>
+
   </body>
 </html>

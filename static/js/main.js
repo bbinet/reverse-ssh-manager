@@ -1,12 +1,28 @@
 var app = angular.module('rss', ['smart-table', 'toggle-switch']);
 
-app.controller('MainCtrl', ['$scope',
-  function($scope) {
+app.controller('MainCtrl', ['$scope', '$http',
+  function($scope, $http) {
 
-    console.log('MainCtrl');
+    $scope.displayedCollection = [];
 
-    $scope.echo = function(str) {
-      console.log(str);
+    var error_cb = function() {
+      console.log('catch error from server');
     };
+
+    $scope.updateCollection = function() {
+      $http({
+        url: '../uuids',
+        method: 'GET'
+      }).success(function(resp) {
+        if (! resp.success) {
+          error_cb();
+          return;
+        }
+        $scope.internalCollection = resp.db;
+      }).error(error_cb);
+    };
+
+    $scope.updateCollection();
+
   }
 ]);
