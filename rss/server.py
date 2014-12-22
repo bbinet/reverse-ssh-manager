@@ -55,7 +55,7 @@ def index():
 @bottle.get('/<uuid>')
 def status(uuid):
     global port_counter
-    if not uuid in db:
+    if uuid not in db:
         db[uuid] = {
             'uuid': uuid,
             'name': bottle.request.query.get('name'),
@@ -67,6 +67,18 @@ def status(uuid):
         port_counter += 1
     db[uuid]['name'] = bottle.request.query.get('name')
     db[uuid]['time'] = int(time.time())
+    db[uuid].update(netstat(db[uuid]['port']))
+    return db[uuid]
+
+
+@bottle.post('/<uuid>')
+def update(uuid):
+    if uuid not in db:
+        raise bottle.HTTPError(status=404)
+    db[uuid]['active'] = bottle.request.query['active'] == 'true'
+    if not db[uuid]['active']:
+        for pid in netstat(db[uuid]['port'])['established']:
+            psutil.Process(pid).terminate()
     db[uuid].update(netstat(db[uuid]['port']))
     return db[uuid]
 
