@@ -55,8 +55,8 @@ def static_dist(filepath):
         filepath, root=resource_filename(__name__, 'static'))
 
 
-@app.get('/')
-def index():
+@app.get('/uuids')
+def uuids():
     for uuid in db:
         db[uuid].update(netstat(db[uuid]['port']))
     resp = {
@@ -66,8 +66,8 @@ def index():
     return resp
 
 
-@app.get('/<uuid>')
-def status(uuid):
+@app.get('/uuid/<uuid>')
+def check(uuid):
     global port_counter
     if uuid not in db:
         db[uuid] = {
@@ -85,23 +85,23 @@ def status(uuid):
     return db[uuid]
 
 
-@app.post('/<uuid>')
+@app.post('/uuid/<uuid>')
 def update(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
+    db[uuid].update(netstat(db[uuid]['port']))
     db[uuid]['active'] = bottle.request.query['active'] == 'true'
     if not db[uuid]['active']:
-        for pid in netstat(db[uuid]['port'])['established']:
-            psutil.Process(pid).terminate()
-    db[uuid].update(netstat(db[uuid]['port']))
+        terminate(uuid)
     return db[uuid]
 
 
-@app.post('/<uuid>/terminate/<pid>')
-def terminate(uuid, pid):
+@app.post('/uuid/<uuid>/terminate')
+def terminate(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
-    if pid in netstat(db[uuid]['port'])['established']:
+    db[uuid].update(netstat(db[uuid]['port']))
+    for pid in db[uuid]['established']:
         psutil.Process(pid).terminate()
     db[uuid].update(netstat(db[uuid]['port']))
     return db[uuid]
