@@ -4,6 +4,7 @@ import logging
 
 import psutil
 import bottle
+from pkg_resources import resource_filename
 
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -39,6 +40,19 @@ def netstat(port):
         if port in c.raddr and c.status == 'ESTABLISHED':
             status['established'].append(c.pid)
     return status
+
+
+@app.route('/debug/<filepath:path>')
+def static_debug(filepath):
+    if not app.config['debug']:
+        raise bottle.HTTPError(status=404)
+    return bottle.static_file(filepath, root='static')
+
+
+@app.route('/dist/<filepath:path>')
+def static_dist(filepath):
+    return bottle.static_file(
+        filepath, root=resource_filename(__name__, 'static'))
 
 
 @app.get('/')
