@@ -83,6 +83,16 @@ def update(uuid):
     return db[uuid]
 
 
+@bottle.post('/<uuid>/terminate/<pid>')
+def terminate(uuid, pid):
+    if uuid not in db:
+        raise bottle.HTTPError(status=404)
+    if pid in netstat(db[uuid]['port'])['established']:
+        psutil.Process(pid).terminate()
+    db[uuid].update(netstat(db[uuid]['port']))
+    return db[uuid]
+
+
 def run():
     global port_counter
     if len(sys.argv) > 1:
