@@ -1,2 +1,2 @@
-reverse-ssh-server.egg-info
+*.egg-info
 dist
