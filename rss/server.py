@@ -96,7 +96,7 @@ def update(uuid):
     return db[uuid]
 
 
-@app.post('/uuid/<uuid>/terminate')
+@app.get('/uuid/<uuid>/terminate')
 def terminate(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
