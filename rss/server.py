@@ -43,6 +43,8 @@ def netstat(port):
 
 @bottle.get('/')
 def index():
+    for uuid in db:
+        db[uuid].update(netstat(db[uuid]['port']))
     resp = {
         'success': True,
         'db': db.values(),
