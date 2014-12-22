@@ -41,7 +41,7 @@ def netstat(port):
     return status
 
 
-@bottle.get('/')
+@app.get('/')
 def index():
     for uuid in db:
         db[uuid].update(netstat(db[uuid]['port']))
@@ -52,7 +52,7 @@ def index():
     return resp
 
 
-@bottle.get('/<uuid>')
+@app.get('/<uuid>')
 def status(uuid):
     global port_counter
     if uuid not in db:
@@ -71,7 +71,7 @@ def status(uuid):
     return db[uuid]
 
 
-@bottle.post('/<uuid>')
+@app.post('/<uuid>')
 def update(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
@@ -83,7 +83,7 @@ def update(uuid):
     return db[uuid]
 
 
-@bottle.post('/<uuid>/terminate/<pid>')
+@app.post('/<uuid>/terminate/<pid>')
 def terminate(uuid, pid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
