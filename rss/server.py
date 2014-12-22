@@ -116,7 +116,7 @@ def run():
     if app.config['debug']:
         log.setLevel(logging.DEBUG)
         bottle.debug(True)
-    bottle.run(
+    app.run(
         server=app.config['server'],
         host=app.config['host'],
         port=app.config['port'],
