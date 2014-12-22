@@ -1,2 +1,5 @@
 *.egg-info
 dist
+node_modules
+static/vendor/
+rss/static/
