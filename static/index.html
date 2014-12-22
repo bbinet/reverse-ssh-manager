@@ -49,7 +49,7 @@
           <td>{{row.name}}</td>
           <td>{{row.port}}</td>
           <td>{{row.time * 1000 | date:'yy-MM-dd HH:mm:ss'}}</td>
-          <td>{{row.active}}</td>
+          <td><toggle-switch model="row.active" class="switch-mini"></toggle-switch></td>
           <td>{{row.established}}</td>
         </tr>
       </tbody>
