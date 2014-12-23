@@ -16,6 +16,8 @@
     <script src="vendor/angular-smart-table/src/stTable.js"></script>
     <script src="vendor/angular-smart-table/src/stSearch.js"></script>
     <script src="vendor/angular-smart-table/src/stSort.js"></script>
+    <script src="vendor/moment/moment.js"></script>
+    <script src="vendor/angular-moment/angular-moment.js"></script>
     <script src="js/main.js"></script>
     <!-- endbuild -->
 
@@ -48,7 +50,7 @@
           <td>{{row.uuid}}</td>
           <td>{{row.name}}</td>
           <td>{{row.port}}</td>
-          <td>{{row.time * 1000 | date:'yy-MM-dd HH:mm:ss'}}</td>
+          <td am-time-ago="row.time" am-preprocess="unix"></td>
           <td><toggle-switch model="row.active" class="switch-mini"></toggle-switch></td>
           <td>{{row.established}}</td>
         </tr>

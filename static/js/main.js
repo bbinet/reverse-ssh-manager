@@ -1,4 +1,4 @@
-var app = angular.module('rss', ['smart-table', 'toggle-switch']);
+var app = angular.module('rss', ['smart-table', 'toggle-switch', 'angularMoment']);
 
 app.controller('MainCtrl', ['$scope', '$http',
   function($scope, $http) {
