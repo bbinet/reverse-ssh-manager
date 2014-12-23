@@ -36,9 +36,9 @@
         <tr>
           <th st-sort="uuid">UUID</th>
           <th st-sort="name">Name</th>
-          <th st-sort="port">Port</th>
           <th st-sort="time">Last check</th>
           <th st-sort="active">Status</th>
+          <th st-sort="port">Port</th>
           <th st-sort="listen">Listening</th>
           <th st-sort="established">Connections established</th>
         </tr>
@@ -47,12 +47,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="row in displayedCollection">
+        <tr ng-class="{success: row.listen}" ng-repeat="row in displayedCollection">
           <td>{{row.uuid}}</td>
           <td>{{row.name}}</td>
-          <td>{{row.port}}</td>
           <td am-time-ago="row.time" am-preprocess="unix"></td>
           <td><toggle-switch model="row.active" class="switch-mini"></toggle-switch></td>
+          <td>{{row.port}}</td>
           <td>{{row.listen}}</td>
           <td>{{row.established}}</td>
         </tr>
