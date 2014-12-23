@@ -37,7 +37,5 @@ app.controller('MainCtrl', ['$scope', '$http',
       }).error(error_cb);
     };
 
-    $scope.updateCollection();
-
   }
 ]);

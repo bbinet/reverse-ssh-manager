@@ -29,7 +29,7 @@
     <!-- endbuild -->
   </head>
 
-  <body ng-controller="MainCtrl">
+  <body ng-controller="MainCtrl" data-ng-init="updateCollection()">
 
     <table st-table="displayedCollection" st-safe-src="internalCollection" class="table table-striped">
       <thead>
