@@ -1,13 +1,19 @@
-var app = angular.module('rss', ['smart-table', 'toggle-switch', 'angularMoment']);
+var app = angular.module('rss', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
 
-app.controller('MainCtrl', ['$scope', '$http',
-  function($scope, $http) {
+app.controller('MainCtrl', ['$scope', '$http', '$alert',
+  function($scope, $http, $alert) {
 
     $scope.displayedCollection = [];
 
     var watchers = [];
     var error_cb = function() {
-      //console.log('catch error from server');
+      $alert({
+        title: 'Server error: ',
+        content: 'An server error occured...',
+        type: 'danger',
+        container: '#alerts-container',
+        duration: 3
+      });
     };
 
     $scope.updateCollection = function() {

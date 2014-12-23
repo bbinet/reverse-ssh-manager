@@ -18,6 +18,10 @@
     <script src="vendor/angular-smart-table/src/stSort.js"></script>
     <script src="vendor/moment/moment.js"></script>
     <script src="vendor/angular-moment/angular-moment.js"></script>
+    <script src="vendor/angular-strap/dist/modules/dimensions.js"></script>
+    <script src="vendor/angular-strap/dist/modules/modal.js"></script>
+    <script src="vendor/angular-strap/dist/modules/alert.js"></script>
+    <script src="vendor/angular-strap/dist/modules/alert.tpl.js"></script>
     <script src="js/main.js"></script>
     <!-- endbuild -->
 
@@ -30,6 +34,8 @@
   </head>
 
   <body ng-controller="MainCtrl" data-ng-init="updateCollection()">
+
+    <div id="alerts-container"></div>
 
     <table st-table="displayedCollection" st-safe-src="internalCollection" class="table table-striped">
       <thead>
