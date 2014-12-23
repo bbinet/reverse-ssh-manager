@@ -7,7 +7,7 @@ app.controller('MainCtrl', ['$scope', '$http',
 
     var watchers = [];
     var error_cb = function() {
-      console.log('catch error from server');
+      //console.log('catch error from server');
     };
 
     $scope.updateCollection = function() {
@@ -19,7 +19,7 @@ app.controller('MainCtrl', ['$scope', '$http',
           error_cb();
           return;
         }
-        angular.forEach(watchers, function(unwatch, idx) {
+        angular.forEach(watchers, function(unwatch) {
           // unregister old watchers
           unwatch();
         });
