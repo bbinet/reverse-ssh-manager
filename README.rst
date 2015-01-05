@@ -1,10 +1,10 @@
-Reverse-ssh-server
+Reverse-ssh-manager
 ==================
 
-Reverse-ssh-server allows to manage reverse ssh connections through a web
+Reverse-ssh-manager allows to manage reverse ssh connections through a web
 application.
 
-It also provide a Dockerfile to easily run Reverse-ssh-server in a docker
+It also provide a Dockerfile to easily run Reverse-ssh-manager in a docker
 container.
 
 
