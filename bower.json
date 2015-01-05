@@ -4,7 +4,7 @@
   "devDependencies": {
     "bootstrap": "3.3.1",
     "angular": "1.3.8",
-    "angular-bootstrap-toggle-switch": "0.5.1",
+    "angular-bootstrap-toggle-switch": "https://github.com/tbrushwyler/angular-toggle-switch.git#9a771c02844c4ffd91c54acdd0493d2ce5a7bb80",
     "angular-smart-table": "1.4.5",
     "moment": "2.8.4",
     "angular-moment": "0.8.3",
