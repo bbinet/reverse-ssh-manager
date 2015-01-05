@@ -9,7 +9,7 @@ RUN apt-get update && \
 # psutil==1.2.1 ?
 RUN pip install circus chaussette waitress
 
-RUN adduser --system --shell /bin/sh --no-create-home autossh --uid 500
+RUN adduser --system --shell /bin/sh --no-create-home rsm --uid 500
 
 RUN mkdir /var/run/sshd /var/log/circus
 

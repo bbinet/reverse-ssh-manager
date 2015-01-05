@@ -53,7 +53,7 @@ ChallengeResponseAuthentication no
 # Change to no to disable tunnelled clear text passwords
 PasswordAuthentication no
 
-AllowUsers autossh
+AllowUsers rsm
 
 # Kerberos options
 #KerberosAuthentication no
