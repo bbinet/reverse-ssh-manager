@@ -14,19 +14,19 @@ app = bottle.Bottle()
 
 app.config.meta_set('port', 'filter', int)
 app.config.meta_set('debug', 'filter', lambda s: str(s).lower() == 'true')
-app.config.meta_set('rss.port-start', 'filter', int)
+app.config.meta_set('rsm.port-start', 'filter', int)
 app.config.load_dict({
     'host': 'localhost',
     'port': 8888,
     'server': 'wsgiref',
     'debug': False,
-    'rss': {
+    'rsm': {
         'port-start': 10000
         }
     })
 
 db = {}
-port_counter = app.config['rss.port-start']
+port_counter = app.config['rsm.port-start']
 
 
 def netstat(port):
@@ -112,7 +112,7 @@ def run():
     if len(sys.argv) > 1:
         for cfg in sys.argv[1:]:
             app.config.load_config(cfg)
-    port_counter = app.config['rss.port-start']
+    port_counter = app.config['rsm.port-start']
     if app.config['debug']:
         log.setLevel(logging.DEBUG)
         bottle.debug(True)

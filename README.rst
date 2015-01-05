@@ -99,28 +99,28 @@ Docker
 Build
 ~~~~~
 
-To create the image `bbinet/rss`, execute the following command::
+To create the image `bbinet/rsm`, execute the following command::
 
-    docker build -t bbinet/rss .
+    docker build -t bbinet/rsm .
 
 You can now push the new image to the public registry::
 
-    docker push bbinet/rss
+    docker push bbinet/rsm
 
 Run
 ~~~
 
-Then, when starting your rss container, you will want to bind ports `22` and
-`8888` from the rss container to a host external port.
+Then, when starting your rsm container, you will want to bind ports `22` and
+`8888` from the rsm container to a host external port.
 
 You also need to provide a read-only `authorized_keys` file that will be use to
 allow some users to create ssh tunnels using their public ssh key.
 
 For example:
 
-    $ docker pull bbinet/rss
+    $ docker pull bbinet/rsm
 
-    $ docker run --name rss \
+    $ docker run --name rsm \
         -v authorized_keys:/config/authorized_keys:ro \
         -p 22:22 \
-        bbinet/rss
+        bbinet/rsm

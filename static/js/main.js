@@ -1,4 +1,4 @@
-var app = angular.module('rss', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
+var app = angular.module('rsm', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
 
 app.controller('MainCtrl', ['$scope', '$http', '$alert',
   function($scope, $http, $alert) {

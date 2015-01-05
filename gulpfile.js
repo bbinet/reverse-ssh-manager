@@ -19,12 +19,12 @@ gulp.task('usemin', function() {
       js: [uglify(), rev()]
       //js: [uglify({mangle: false}), rev()]
     }))
-    .pipe(gulp.dest('rss/static'));
+    .pipe(gulp.dest('rsm/static'));
 });
 
 gulp.task('img', function() {
   gulp.src('static/img/*')
-    .pipe(gulp.dest('rss/static/img'));
+    .pipe(gulp.dest('rsm/static/img'));
 });
 
 gulp.task('default', ['usemin', 'img', 'lint']);
