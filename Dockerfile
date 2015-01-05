@@ -13,8 +13,6 @@ RUN adduser --system --shell /bin/sh --no-create-home autossh --uid 500
 
 RUN mkdir /var/run/sshd /var/log/circus
 
-VOLUME ["/config/authorized_keys"]
-
 ADD . /rsm
 RUN pip install /rsm
 
