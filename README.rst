@@ -11,27 +11,27 @@ container.
 Install
 -------
 
-You can install `reverse-ssh-server` in a virtualenv (with `virtualenvwrapper`
+You can install `reverse-ssh-manager` in a virtualenv (with `virtualenvwrapper`
 and `pip`)::
 
-    $ mkvirtualenv reverse-ssh-server
-    (reverse-ssh-server) $ pip install reverse-ssh-server
+    $ mkvirtualenv reverse-ssh-manager
+    (reverse-ssh-manager) $ pip install reverse-ssh-manager
 
-Or if you want to contribute some patches to `reverse-ssh-server`::
+Or if you want to contribute some patches to `reverse-ssh-manager`::
 
-    $ git clone git@github.com:bbinet/reverse-ssh-server.git
-    $ cd reverse-ssh-server/
-    $ mkvirtualenv reverse-ssh-server
-    (reverse-ssh-server) $ python setup.py develop
+    $ git clone git@github.com:bbinet/reverse-ssh-manager.git
+    $ cd reverse-ssh-manager/
+    $ mkvirtualenv reverse-ssh-manager
+    (reverse-ssh-manager) $ python setup.py develop
 
 Then, do the following steps::
 
-    (reverse-ssh-server) $ pip install nodeenv
-    (reverse-ssh-server) $ nodeenv -p
-    (reverse-ssh-server) $ npm install -g bower gulp
-    (reverse-ssh-server) $ npm install
-    (reverse-ssh-server) $ bower install
-    (reverse-ssh-server) $ gulp
+    (reverse-ssh-manager) $ pip install nodeenv
+    (reverse-ssh-manager) $ nodeenv -p
+    (reverse-ssh-manager) $ npm install -g bower gulp
+    (reverse-ssh-manager) $ npm install
+    (reverse-ssh-manager) $ bower install
+    (reverse-ssh-manager) $ gulp
 
 
 Configure
@@ -59,9 +59,9 @@ Note that the `[server]` section is optional, the defaults are::
 Run
 ---
 
-Run the reverse-ssh-server server by running the following command::
+Run the reverse-ssh-manager server by running the following command::
 
-    (reverse-ssh-server) $ reverse-ssh-server path/to/config.cfg
+    (reverse-ssh-manager) $ reverse-ssh-manager path/to/config.cfg
 
 Then visit http://localhost:8888/, it should display a web interface to manage
 reverse ssh tunnels.
@@ -72,10 +72,10 @@ Release
 
 To make a new release, do the following steps::
 
-    (reverse-ssh-server) $ npm install
-    (reverse-ssh-server) $ bower install
-    (reverse-ssh-server) $ gulp
-    (reverse-ssh-server) $ deactivate
+    (reverse-ssh-manager) $ npm install
+    (reverse-ssh-manager) $ bower install
+    (reverse-ssh-manager) $ gulp
+    (reverse-ssh-manager) $ deactivate
     $ vi setup.py  # bump version
     $ git add setup.py
     $ git commit -m "bump version to X.X.X"
@@ -83,14 +83,14 @@ To make a new release, do the following steps::
     $ vi debian/changelog  # edit changelog
     $ git add debian/changelog
     $ git ci -m "update debian changelog to version X.X.X+hl~1"
-    $ ../pdebuild.sh build reverse-ssh-server
+    $ ../pdebuild.sh build reverse-ssh-manager
 
 If debian package was correctly generated, you can create a tag in git, and
 push the debian package to reprepro with dput::
 
     $ git tag vX.X.X
     $ git push --tags
-    $ dput kimsufi /home/bruno/dev/build/reverse-ssh-server/amd64/reverse-ssh-server_X.X.X+hl~1_amd64.changes
+    $ dput kimsufi /home/bruno/dev/build/reverse-ssh-manager/amd64/reverse-ssh-manager_X.X.X+hl~1_amd64.changes
 
 
 Docker

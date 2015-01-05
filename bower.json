@@ -1,5 +1,5 @@
 {
-  "name": "reverse-ssh-server",
+  "name": "reverse-ssh-manager",
   "version": "0.1",
   "devDependencies": {
     "bootstrap": "3.3.1",

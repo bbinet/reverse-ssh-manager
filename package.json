@@ -1,5 +1,5 @@
 {
-  "name": "reverse-ssh-server",
+  "name": "reverse-ssh-manager",
   "version": "0.1.0",
   "description": "allows to manage reverse ssh connections through a web application",
   "main": "static/index.html",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:helioslite/reverse-ssh-server.git"
+    "url": "git@bitbucket.org:helioslite/reverse-ssh-manager.git"
   },
   "author": "Bruno Binet <bruno.binet@helioslite.com>",
   "license": "ISC"

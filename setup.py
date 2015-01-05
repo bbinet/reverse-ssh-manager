@@ -3,16 +3,16 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='reverse-ssh-server',
+    name='reverse-ssh-manager',
     version='0.1',
-    description='reverse-ssh-server allows to manage reverse ssh connections '
+    description='reverse-ssh-manager allows to manage reverse ssh connections '
                 'through a web application',
     long_description=open('README.rst').read(),
     license='MIT',
     author='Bruno Binet',
     author_email='bruno.binet@gmail.com',
     keywords=['ssh', 'tunnel', 'reverse', 'manage', 'web', 'application'],
-    url='https://github.com/bbinet/reverse-ssh-server',
+    url='https://github.com/bbinet/reverse-ssh-manager',
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 2.7",
         ],
     entry_points={
-        'console_scripts': ['reverse-ssh-server=rss.server:run']
+        'console_scripts': ['reverse-ssh-manager=rss.server:run']
         },
     packages=find_packages(),
     include_package_data=True,

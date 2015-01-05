@@ -18,7 +18,7 @@ VOLUME ["/config/authorized_keys"]
 ADD . /rss
 RUN pip install /rss
 
-# sshd, reverse-ssh-server
+# sshd, reverse-ssh-manager
 EXPOSE 22 8888
 
 CMD ["/usr/local/bin/circusd", "/rss/docker/circus/circusd.ini"]
