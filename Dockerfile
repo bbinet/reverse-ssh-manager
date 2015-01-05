@@ -11,7 +11,7 @@ RUN pip install circus chaussette waitress
 
 RUN adduser --system --shell /bin/sh --no-create-home autossh --uid 500
 
-RUN mkdir /var/run/sshd
+RUN mkdir /var/run/sshd /var/log/circus
 
 VOLUME ["/config/authorized_keys"]
 
