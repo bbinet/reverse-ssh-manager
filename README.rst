@@ -91,3 +91,36 @@ push the debian package to reprepro with dput::
     $ git tag vX.X.X
     $ git push --tags
     $ dput kimsufi /home/bruno/dev/build/reverse-ssh-server/amd64/reverse-ssh-server_X.X.X+hl~1_amd64.changes
+
+
+Docker
+------
+
+Build
+~~~~~
+
+To create the image `bbinet/rss`, execute the following command::
+
+    docker build -t bbinet/rss .
+
+You can now push the new image to the public registry::
+
+    docker push bbinet/rss
+
+Run
+~~~
+
+Then, when starting your rss container, you will want to bind ports `22` and
+`8888` from the rss container to a host external port.
+
+You also need to provide a read-only `authorized_keys` file that will be use to
+allow some users to create ssh tunnels using their public ssh key.
+
+For example:
+
+    $ docker pull bbinet/rss
+
+    $ docker run --name rss \
+        -v authorized_keys:/config/authorized_keys:ro \
+        -p 22:22 \
+        bbinet/rss
