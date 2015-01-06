@@ -27,7 +27,7 @@ Or if you want to contribute some patches to `reverse-ssh-manager`::
 Then, do the following steps::
 
     (reverse-ssh-manager) $ pip install nodeenv
-    (reverse-ssh-manager) $ nodeenv -p
+    (reverse-ssh-manager) $ nodeenv -p --prebuilt
     (reverse-ssh-manager) $ npm install -g bower gulp
     (reverse-ssh-manager) $ npm install
     (reverse-ssh-manager) $ bower install
