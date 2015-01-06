@@ -65,7 +65,7 @@ AllowUsers rsm
 #GSSAPIAuthentication no
 #GSSAPICleanupCredentials yes
 
-AllowTcpForwarding no
+AllowTcpForwarding yes
 
 X11Forwarding no
 X11DisplayOffset 10
