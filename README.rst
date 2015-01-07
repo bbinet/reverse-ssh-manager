@@ -116,6 +116,9 @@ Then, when starting your rsm container, you will want to bind ports `22` and
 You also need to provide a read-only `authorized_keys` file that will be use to
 allow some users to create ssh tunnels using their public ssh key.
 
+Note that psutil won't be able to get pids of running ssh connection unless you
+specify option `--cap-add SYS_PTRACE` with docker run.
+
 For example:
 
     $ docker pull bbinet/rsm
@@ -123,4 +126,5 @@ For example:
     $ docker run --name rsm \
         -v authorized_keys:/config/authorized_keys:ro \
         -p 22:22 \
+        --cap-add SYS_PTRACE \
         bbinet/rsm
