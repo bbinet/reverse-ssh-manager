@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
   openssh-server python-pip build-essential python-dev libzmq1 libzmq-dev \
   libxml2-dev libxslt1-dev curl git
 
-# psutil==1.2.1 ?
 RUN pip install circus chaussette waitress nodeenv
 
 RUN adduser --system --shell /bin/sh --no-create-home rsm --uid 500
