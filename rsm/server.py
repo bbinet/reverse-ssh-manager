@@ -36,7 +36,7 @@ def netstat(port):
         }
     for c in psutil.net_connections(kind='tcp'):
         if port in c.laddr and c.status == 'LISTEN':
-            status['listen'] = True
+            status['listen'] = c.pid
         if port in c.raddr and c.status == 'ESTABLISHED':
             status['established'].append(c.pid)
     return status
@@ -101,7 +101,8 @@ def terminate(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
     db[uuid].update(netstat(db[uuid]['port']))
-    for pid in db[uuid]['established']:
+    pid = db[uuid]['listen']
+    if pid:
         psutil.Process(pid).terminate()
     db[uuid].update(netstat(db[uuid]['port']))
     return db[uuid]
