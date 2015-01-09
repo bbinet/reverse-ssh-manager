@@ -1,7 +1,7 @@
 var app = angular.module('rsm', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
 
-app.controller('MainCtrl', ['$scope', '$http', '$alert',
-  function($scope, $http, $alert) {
+app.controller('MainCtrl', ['$scope', '$interval', '$http', '$alert',
+  function($scope, $interval, $http, $alert) {
 
     $scope.displayedCollection = [];
 
@@ -42,6 +42,8 @@ app.controller('MainCtrl', ['$scope', '$http', '$alert',
         });
       }).error(error_cb);
     };
+
+    $interval($scope.updateCollection, 10000);
 
   }
 ]);
