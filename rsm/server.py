@@ -55,6 +55,13 @@ def static_dist(filepath):
         filepath, root=resource_filename(__name__, 'static'))
 
 
+@app.route('/')
+def index():
+    if app.config['debug']:
+        return bottle.redirect('/debug/index.html')
+    return bottle.redirect('/dist/index.html')
+
+
 @app.get('/uuids')
 def uuids():
     for uuid in db:
