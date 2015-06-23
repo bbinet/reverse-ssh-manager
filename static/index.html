@@ -13,6 +13,7 @@
     <script src="vendor/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
     <script src="js/fix-angular-smart-table.js"></script>
     <script src="vendor/angular-smart-table/src/smart-table.module.js"></script>
+    <script src="vendor/angular-smart-table/src/stConfig.js"></script>
     <script src="vendor/angular-smart-table/src/stTable.js"></script>
     <script src="vendor/angular-smart-table/src/stSearch.js"></script>
     <script src="vendor/angular-smart-table/src/stSort.js"></script>
@@ -57,7 +58,7 @@
           <td>{{row.uuid}}</td>
           <td>{{row.name}}</td>
           <td am-time-ago="row.time" am-preprocess="unix"></td>
-          <td><toggle-switch model="row.active" class="switch-mini"></toggle-switch></td>
+          <td><toggle-switch ng-model="row.active" class="switch-mini"></toggle-switch></td>
           <td>{{row.port}}</td>
           <td>{{row.listen}}</td>
           <td>{{row.established}}</td>
