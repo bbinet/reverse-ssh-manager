@@ -68,7 +68,7 @@ def uuids():
         db[uuid].update(netstat(db[uuid]['port']))
     resp = {
         'success': True,
-        'db': db.values(),
+        'db': db,
         }
     return resp
 

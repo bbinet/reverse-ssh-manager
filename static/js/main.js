@@ -1,11 +1,10 @@
 var app = angular.module('rsm', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
 
-app.controller('MainCtrl', ['$scope', '$interval', '$http', '$alert',
-  function($scope, $interval, $http, $alert) {
+app.controller('MainCtrl', ['$scope', '$window', '$interval', '$http', '$alert',
+  function($scope, $window, $interval, $http, $alert) {
 
-    $scope.displayedCollection = [];
+    $scope.internalCollection = [];
 
-    var watchers = [];
     var error_cb = function() {
       $alert({
         title: 'Server error: ',
@@ -25,20 +24,28 @@ app.controller('MainCtrl', ['$scope', '$interval', '$http', '$alert',
           error_cb();
           return;
         }
-        angular.forEach(watchers, function(unwatch) {
-          // unregister old watchers
-          unwatch();
+        var db = resp.db;
+        angular.forEach($scope.internalCollection, function(item) {
+          if (!db[item.uuid]) {
+            // reload the whole page if item have been removed on the server
+            $window.location.reload();
+          }
+          angular.extend(item, db[item.uuid]);
+          delete db[item.uuid];
         });
-        $scope.internalCollection = resp.db;
-        angular.forEach($scope.internalCollection, function(item, idx) {
-          watchers.push(
-            $scope.$watch(
-              'displayedCollection[' + idx +'].active', function(active) {
-                $http.post('../uuid/' + item.uuid, {active: active})
+        angular.forEach(db, function(item, uuid) {
+          var idx = $scope.internalCollection.push(item) - 1;
+          $scope.$watch(
+            'internalCollection[' + idx +'].active',
+            function(newValue, oldValue) {
+              if (newValue != oldValue) {
+                $http.post('../uuid/' + uuid, {active: newValue})
                   .success(function(resp) {
-                    $scope.displayedCollection[idx] = resp;
-                  });
-              }));
+                    angular.extend(item, resp);
+                  })
+                  .error(error_cb);
+              }
+            });
         });
       }).error(error_cb);
     };
