@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reverse-ssh-manager',
-    version='0.2',
+    version='1.0',
     description='reverse-ssh-manager allows to manage reverse ssh connections '
                 'through a web application',
     long_description=open('README.rst').read(),
@@ -14,7 +14,7 @@ setup(
     keywords=['ssh', 'tunnel', 'reverse', 'manage', 'web', 'application'],
     url='https://github.com/bbinet/reverse-ssh-manager',
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         'License :: OSI Approved :: MIT License',
         "Operating System :: MacOS :: MacOS X",

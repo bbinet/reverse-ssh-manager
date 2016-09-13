@@ -1,6 +1,6 @@
 {
   "name": "reverse-ssh-manager",
-  "version": "0.2",
+  "version": "1.0",
   "devDependencies": {
     "bootstrap": "3.3.5",
     "angular": "1.4.1",
