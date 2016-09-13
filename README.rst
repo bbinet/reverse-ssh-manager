@@ -41,15 +41,15 @@ Create a configuration file that looks like::
 
     $ cat path/to/config.cfg
 
-    [server]
+    [bottle]
     host = 0.0.0.0
     port = 8080
     server = cherrypy
     debug = true
 
-Note that the `[server]` section is optional, the defaults are::
+Note that the `[bottle]` section is optional, the defaults are::
 
-    [server]
+    [bottle]
     host = localhost
     port = 8888
     server = wsgiref
