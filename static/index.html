@@ -48,9 +48,10 @@
           <th st-sort="port">Port</th>
           <th st-sort="listen">Listening</th>
           <th st-sort="established">Connections established</th>
+          <th st-sort="data">Data</th>
         </tr>
         <tr>
-          <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+          <th colspan="8"><input st-search="" class="form-control" placeholder="Global search ..." type="text"/></th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +63,7 @@
           <td>{{row.port}}</td>
           <td>{{row.listen}}</td>
           <td>{{row.established}}</td>
+          <td><div contenteditable ng-model="row.data" class="contenteditable"></div></td>
         </tr>
       </tbody>
     </table>

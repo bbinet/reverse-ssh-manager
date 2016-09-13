@@ -84,12 +84,15 @@ def check(uuid):
             'active': False,
             'listen': False,
             'established': [],
+            'data': '',
             }
         port_counter += 1
     db[uuid]['name'] = bottle.request.query.get('name')
     db[uuid]['time'] = int(time.time())
     db[uuid].update(netstat(db[uuid]['port']))
-    return db[uuid]
+    d = db[uuid].copy()
+    db[uuid]['data'] = ''
+    return d
 
 
 @app.post('/uuid/<uuid>')
@@ -98,6 +101,7 @@ def update(uuid):
         raise bottle.HTTPError(status=404)
     db[uuid].update(netstat(db[uuid]['port']))
     db[uuid]['active'] = bottle.request.json['active'] is True
+    db[uuid]['data'] = bottle.request.json['data']
     if not db[uuid]['active']:
         terminate(uuid)
     return db[uuid]
