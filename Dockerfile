@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libxml2-dev libxslt1-dev curl git \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip install circus chaussette waitress nodeenv psutil>=2.2.1
+RUN pip install circus chaussette waitress==0.9.0 nodeenv psutil>=2.2.1
 
 RUN adduser --system --shell /bin/sh --no-create-home rsm --uid 500
 
