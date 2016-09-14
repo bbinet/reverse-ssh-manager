@@ -1,4 +1,12 @@
-var app = angular.module('rsm', ['smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
+var app = angular.module('rsm', [
+    'smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
+
+app.service('utils', function() {
+  this.htmlDecode = function(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
+  };
+});
 
 app.directive('contenteditable', ['$sce', function($sce) {
   return {
@@ -36,8 +44,9 @@ app.directive('contenteditable', ['$sce', function($sce) {
   };
 }]);
 
-app.controller('MainCtrl', ['$scope', '$window', '$interval', '$http', '$alert',
-  function($scope, $window, $interval, $http, $alert) {
+app.controller('MainCtrl', [
+    '$scope', '$window', '$interval', '$http', '$alert', 'utils',
+  function($scope, $window, $interval, $http, $alert, utils) {
 
     $scope.internalCollection = [];
 
@@ -90,7 +99,8 @@ app.controller('MainCtrl', ['$scope', '$window', '$interval', '$http', '$alert',
               if (newValue != oldValue) {
                 $http.post(
                     '../uuid/' + uuid,
-                    angular.extend({}, item, {data: newValue}))
+                    angular.extend(
+                      {}, item, {data: utils.htmlDecode(newValue)}))
                   .success(function(resp) {
                     angular.extend(item, resp);
                   })
