@@ -1,14 +1,13 @@
 Reverse-ssh-manager
 ==================
 
-Reverse-ssh-manager allows to manage reverse ssh connections through a web
-application.
+Reverse-ssh-manager is an application to manage reverse ssh connections through a web
+interface.
 
-It also provide a Dockerfile to easily run Reverse-ssh-manager in a docker
+It provides a Dockerfile to easily run Reverse-ssh-manager in a Docker
 container.
 
-
-Install
+Manual installation
 -------
 
 You can install `reverse-ssh-manager` in a virtualenv (with `virtualenvwrapper`
@@ -33,8 +32,54 @@ Then, do the following steps::
     (reverse-ssh-manager) $ bower install
     (reverse-ssh-manager) $ gulp
 
+Run
+~~~
 
-Configure
+Run the reverse-ssh-manager server by running the following command::
+
+    (reverse-ssh-manager) $ reverse-ssh-manager path/to/config.cfg
+
+Then visit http://localhost:8888/, it should display a web interface to manage
+reverse SSH tunnels.
+
+
+Docker
+------
+
+Run inside a Docker container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The command below will pull the image from the Docker Hub if it's not already downloaded
+and run `Reverse-ssh-manager` in a Docker container named `rsm`.
+::
+
+        docker run --name rsm \
+        -v authorized_keys:/config/authorized_keys:ro \
+        -p 22:22 -p 8888:8888 \
+        --cap-add SYS_PTRACE \
+        bbinet/reverse-ssh-manager 
+ 
+
+``authorized_keys`` file from current directory will be used to
+allow some users to create SSH tunnels using their public SSH key.
+
+``--cap-add SYS_PTRACE`` will allow to get pids of running SSH connections.
+
+
+Build
+~~~~~
+
+You can also build a Docker image from scratch. First, clone this repository
+``cd`` to its contents and run::
+
+    docker build -t bbinet/reverse-ssh-manager .
+
+To push image to public registry::
+
+    docker push bbinet/rsm
+
+
+Configuration
 ---------
 
 Create a configuration file that looks like::
@@ -54,17 +99,6 @@ Note that the `[bottle]` section is optional, the defaults are::
     port = 8888
     server = wsgiref
     debug = false
-
-
-Run
----
-
-Run the reverse-ssh-manager server by running the following command::
-
-    (reverse-ssh-manager) $ reverse-ssh-manager path/to/config.cfg
-
-Then visit http://localhost:8888/, it should display a web interface to manage
-reverse ssh tunnels.
 
 
 Release
@@ -93,38 +127,3 @@ push the debian package to reprepro with dput::
     $ dput kimsufi /home/bruno/dev/build/reverse-ssh-manager/amd64/reverse-ssh-manager_X.X.X+hl~1_amd64.changes
 
 
-Docker
-------
-
-Build
-~~~~~
-
-To create the image `bbinet/rsm`, execute the following command::
-
-    docker build -t bbinet/rsm .
-
-You can now push the new image to the public registry::
-
-    docker push bbinet/rsm
-
-Run
-~~~
-
-Then, when starting your rsm container, you will want to bind ports `22` and
-`8888` from the rsm container to a host external port.
-
-You also need to provide a read-only `authorized_keys` file that will be use to
-allow some users to create ssh tunnels using their public ssh key.
-
-Note that psutil won't be able to get pids of running ssh connection unless you
-specify option `--cap-add SYS_PTRACE` with docker run.
-
-For example:
-
-    $ docker pull bbinet/rsm
-
-    $ docker run --name rsm \
-        -v authorized_keys:/config/authorized_keys:ro \
-        -p 22:22 \
-        --cap-add SYS_PTRACE \
-        bbinet/rsm
