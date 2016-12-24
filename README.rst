@@ -7,6 +7,42 @@ interface.
 It provides a Dockerfile to easily run Reverse-ssh-manager in a Docker
 container.
 
+Manual installation
+-------
+
+You can install `reverse-ssh-manager` in a virtualenv (with `virtualenvwrapper`
+and `pip`)::
+
+    $ mkvirtualenv reverse-ssh-manager
+    (reverse-ssh-manager) $ pip install reverse-ssh-manager
+
+Or if you want to contribute some patches to `reverse-ssh-manager`::
+
+    $ git clone git@github.com:bbinet/reverse-ssh-manager.git
+    $ cd reverse-ssh-manager/
+    $ mkvirtualenv reverse-ssh-manager
+    (reverse-ssh-manager) $ python setup.py develop
+
+Then, do the following steps::
+
+    (reverse-ssh-manager) $ pip install nodeenv
+    (reverse-ssh-manager) $ nodeenv -p --prebuilt
+    (reverse-ssh-manager) $ npm install -g bower gulp
+    (reverse-ssh-manager) $ npm install
+    (reverse-ssh-manager) $ bower install
+    (reverse-ssh-manager) $ gulp
+
+Run
+~~~
+
+Run the reverse-ssh-manager server by running the following command::
+
+    (reverse-ssh-manager) $ reverse-ssh-manager path/to/config.cfg
+
+Then visit http://localhost:8888/, it should display a web interface to manage
+reverse SSH tunnels.
+
+
 Docker
 ------
 
@@ -41,45 +77,6 @@ You can also build a Docker image from scratch. First, clone this repository
 To push image to public registry::
 
     docker push bbinet/rsm
-
-
-
-Manual installation
--------
-
-You can install `reverse-ssh-manager` in a virtualenv (with `virtualenvwrapper`
-and `pip`)::
-
-    $ mkvirtualenv reverse-ssh-manager
-    (reverse-ssh-manager) $ pip install reverse-ssh-manager
-
-Or if you want to contribute some patches to `reverse-ssh-manager`::
-
-    $ git clone git@github.com:bbinet/reverse-ssh-manager.git
-    $ cd reverse-ssh-manager/
-    $ mkvirtualenv reverse-ssh-manager
-    (reverse-ssh-manager) $ python setup.py develop
-
-Then, do the following steps::
-
-    (reverse-ssh-manager) $ pip install nodeenv
-    (reverse-ssh-manager) $ nodeenv -p --prebuilt
-    (reverse-ssh-manager) $ npm install -g bower gulp
-    (reverse-ssh-manager) $ npm install
-    (reverse-ssh-manager) $ bower install
-    (reverse-ssh-manager) $ gulp
-
-
-
-Run
-~~~
-
-Run the reverse-ssh-manager server by running the following command::
-
-    (reverse-ssh-manager) $ reverse-ssh-manager path/to/config.cfg
-
-Then visit http://localhost:8888/, it should display a web interface to manage
-reverse SSH tunnels.
 
 
 Configuration
