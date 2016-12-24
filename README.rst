@@ -14,7 +14,7 @@ Run inside a Docker container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The command below will pull the image from the Docker Hub if it's not already downloaded
-and run `Reverse-ssh-manager` in a Docker containter named `rsm`.
+and run `Reverse-ssh-manager` in a Docker container named `rsm`.
 ::
 
         docker run --name rsm \
