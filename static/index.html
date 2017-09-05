@@ -46,8 +46,7 @@
           <th st-sort="time">Last check</th>
           <th st-sort="active">Status</th>
           <th st-sort="port">Port</th>
-          <th st-sort="listen">Listening</th>
-          <th st-sort="established">Connections established</th>
+          <th st-sort="established">Pids</th>
           <th st-sort="data">Data</th>
         </tr>
         <tr>
@@ -61,7 +60,6 @@
           <td am-time-ago="row.time" am-preprocess="unix"></td>
           <td><toggle-switch ng-model="row.active" class="switch-mini"></toggle-switch></td>
           <td>{{row.port}}</td>
-          <td>{{row.listen}}</td>
           <td>{{row.established}}</td>
           <td><div contenteditable ng-model="row.data" class="contenteditable"></div></td>
         </tr>
