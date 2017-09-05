@@ -47,6 +47,7 @@
           <th st-sort="active">Status</th>
           <th st-sort="port">Port</th>
           <th st-sort="established">Pids</th>
+          <th st-sort="progress">Progress</th>
           <th st-sort="data">Data</th>
         </tr>
         <tr>
@@ -61,6 +62,7 @@
           <td><toggle-switch ng-model="row.active" class="switch-mini"></toggle-switch></td>
           <td>{{row.port}}</td>
           <td>{{row.established}}</td>
+          <td>{{row.progress}}</td>
           <td><div contenteditable ng-model="row.data" class="contenteditable"></div></td>
         </tr>
       </tbody>

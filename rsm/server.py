@@ -79,7 +79,6 @@ def check(uuid):
     if uuid not in db:
         db[uuid] = {
             'uuid': uuid,
-            'name': bottle.request.query.get('name'),
             'port': port_counter,
             'active': False,
             'listen': False,
@@ -88,6 +87,7 @@ def check(uuid):
             }
         port_counter += 1
     db[uuid]['name'] = bottle.request.query.get('name')
+    db[uuid]['progress'] = bottle.request.query.get('progress')
     db[uuid]['time'] = int(time.time())
     db[uuid].update(netstat(db[uuid]['port']))
     d = db[uuid].copy()
