@@ -41,6 +41,11 @@
     <table st-table="displayedCollection" st-safe-src="internalCollection" class="table table-striped">
       <thead>
         <tr>
+          <th>
+            <button type="button" ng-click="selectedDelete()" class="btn btn-sm btn-danger">
+              <i class="glyphicon glyphicon-remove-circle"></i>
+            </button>
+          </th>
           <th st-sort="uuid">UUID</th>
           <th st-sort="name">Name</th>
           <th st-sort="time">Last check</th>
@@ -49,13 +54,17 @@
           <th st-sort="established">Pids</th>
           <th st-sort="progress">Progress</th>
           <th st-sort="data">Data</th>
+          <th></th>
         </tr>
         <tr>
-          <th colspan="8"><input st-search="" class="form-control" placeholder="Global search ..." type="text"/></th>
+          <th colspan="1"><st-select-all all="displayedCollection"></st-select-all></th>
+          <th colspan="7"><input st-search="" class="form-control" placeholder="Search ..." type="text"/></th>
+          <th colspan="1"><input ng-model="data" ng-keypress="($event.which === 13) && selectedUpdateData(data)" class="form-control" placeholder="Set data ..." type="text"/></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-class="{success: row.listen}" ng-repeat="row in displayedCollection">
+          <td cs-select="row"></td>
           <td>{{row.uuid}}</td>
           <td>{{row.name}}</td>
           <td am-time-ago="row.time" am-preprocess="unix"></td>
@@ -63,7 +72,7 @@
           <td>{{row.port}}</td>
           <td>{{row.established}}</td>
           <td>{{row.progress}}</td>
-          <td><div contenteditable ng-model="row.data" class="contenteditable"></div></td>
+          <td>{{row.data}}</td>
         </tr>
       </tbody>
     </table>

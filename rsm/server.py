@@ -66,11 +66,10 @@ def index():
 def uuids():
     for uuid in db:
         db[uuid].update(netstat(db[uuid]['port']))
-    resp = {
+    return {
         'success': True,
         'db': db,
         }
-    return resp
 
 
 @app.get('/uuid/<uuid>')
@@ -95,13 +94,32 @@ def check(uuid):
     return d
 
 
+@app.post('/bulk_delete')
+def bulk_delete():
+    for uuid in bottle.request.json:
+        if uuid in db:
+            del db[uuid]
+    return {
+        'success': True
+        }
+
+
+@app.post('/bulk_update_data')
+def bulk_update_data():
+    for uuid, data in bottle.request.json.iteritems():
+        if uuid in db:
+            db[uuid]['data'] = data
+    return {
+        'success': True
+        }
+
+
 @app.post('/uuid/<uuid>')
 def update(uuid):
     if uuid not in db:
         raise bottle.HTTPError(status=404)
     db[uuid].update(netstat(db[uuid]['port']))
     db[uuid]['active'] = bottle.request.json['active'] is True
-    db[uuid]['data'] = bottle.request.json['data']
     if not db[uuid]['active']:
         terminate(uuid)
     return db[uuid]

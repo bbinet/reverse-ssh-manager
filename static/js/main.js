@@ -1,52 +1,66 @@
 var app = angular.module('rsm', [
     'smart-table', 'toggle-switch', 'angularMoment', 'mgcrea.ngStrap.alert']);
 
-app.service('utils', function() {
-  this.htmlDecode = function(input) {
-    var doc = new DOMParser().parseFromString(input, "text/html");
-    return doc.documentElement.textContent;
+app.directive('csSelect', function () {
+  return {
+    require: '^stTable',
+    template: '<input type="checkbox"/>',
+    scope: {
+      row: '=csSelect'
+    },
+    link: function (scope, element, attr, ctrl) {
+
+      element.bind('change', function () {
+        scope.$apply(function () {
+          ctrl.select(scope.row, 'multiple');
+        });
+      });
+
+      scope.$watch('row.isSelected', function (newValue) {
+        if (newValue === true) {
+          element.parent().addClass('st-selected');
+          element.find('input').prop('checked', true);
+        } else {
+          element.parent().removeClass('st-selected');
+          element.find('input').prop('checked', false);
+        }
+      });
+    }
   };
 });
 
-app.directive('contenteditable', ['$sce', function($sce) {
+app.directive('stSelectAll', function () {
   return {
-    restrict: 'A', // only activate on element attribute
-    require: '?ngModel', // get a hold of NgModelController
-    link: function(scope, element, attrs, ngModel) {
+    require: '^stTable',
+    restrict: 'E',
+    template: '<input type="checkbox" ng-model="isAllSelected" />',
+    scope: {
+      all: '='
+    },
+    link: function (scope, element, attr, ctrl) {
 
-      // Specify how UI should be updated
-      ngModel.$render = function() {
-        element.html($sce.trustAsHtml(ngModel.$viewValue || ''));
-      };
-
-      // Listen for change events to enable binding
-      element.on('blur keydown change', function(evt) {
-        var esc = evt.which === 27,
-            enter = evt.which === 13,
-            blur = evt.which === 0,
-            el = evt.target;
-
-        if (esc || evt.which === undefined) {
-          element.html($sce.trustAsHtml(''));
-        }
-        if (enter || esc || blur ||  evt.which === undefined) {
-          scope.$evalAsync(read);
-          el.blur();
-          evt.preventDefault();
-        }
+      scope.$watch('isAllSelected', function () {
+        ctrl.getFilteredCollection().forEach(function(val) {
+          val.isSelected = scope.isAllSelected;
+        });
       });
 
-      // Write data to the model
-      function read() {
-        ngModel.$setViewValue(element.html());
-      }
+      scope.$watch(ctrl.getFilteredCollection(), function(newVal, oldVal) {
+        if (oldVal) {
+          oldVal.forEach(function (val) {
+            val.isSelected = false;
+          });
+        }
+
+        scope.isAllSelected = false;
+      });
     }
   };
-}]);
+});
 
 app.controller('MainCtrl', [
-    '$scope', '$window', '$interval', '$http', '$alert', 'utils',
-  function($scope, $window, $interval, $http, $alert, utils) {
+    '$scope', '$window', '$interval', '$http', '$alert',
+  function($scope, $window, $interval, $http, $alert) {
 
     $scope.internalCollection = [];
 
@@ -58,6 +72,47 @@ app.controller('MainCtrl', [
         container: '#alerts-container',
         duration: 3
       });
+    };
+
+    $scope.selectedDelete = function() {
+      var bulk_json = {};
+      angular.forEach($scope.internalCollection, function(item) {
+        if (item.isSelected) {
+          bulk_json[item.uuid] = true;
+        }
+      });
+      if (bulk_json) {
+        $http.post('../bulk_delete', bulk_json)
+          .success(function(resp) {
+            if (!resp.success) {
+              error_cb();
+              return;
+            }
+            // delete requires a full reload
+            $window.location.reload();
+          })
+        .error(error_cb);
+      }
+    };
+
+    $scope.selectedUpdateData = function(data) {
+      var bulk_json = {};
+      angular.forEach($scope.internalCollection, function(item) {
+        if (item.isSelected) {
+          bulk_json[item.uuid] = data || '';
+        }
+      });
+      if (bulk_json) {
+        $http.post('../bulk_update_data', bulk_json)
+          .success(function(resp) {
+            if (!resp.success) {
+              error_cb();
+              return;
+            }
+            $scope.updateCollection();
+          })
+        .error(error_cb);
+      }
     };
 
     $scope.updateCollection = function() {
@@ -92,26 +147,13 @@ app.controller('MainCtrl', [
                   })
                   .error(error_cb);
               }
-            });
-          $scope.$watch(
-            'internalCollection[' + idx +'].data',
-            function(newValue, oldValue) {
-              if (newValue != oldValue) {
-                $http.post(
-                    '../uuid/' + uuid,
-                    angular.extend(
-                      {}, item, {data: utils.htmlDecode(newValue)}))
-                  .success(function(resp) {
-                    angular.extend(item, resp);
-                  })
-                  .error(error_cb);
-              }
-            });
+            }
+          );
         });
+
       }).error(error_cb);
     };
 
     $interval($scope.updateCollection, 10000);
-
   }
 ]);
