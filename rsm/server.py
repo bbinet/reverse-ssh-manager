@@ -83,12 +83,12 @@ def check(uuid):
             'listen': False,
             'established': [],
             'data': '',
-            'progress': '',
+            'message': '',
             }
         port_counter += 1
     db[uuid]['name'] = bottle.request.query.get('name')
-    if 'progress' in bottle.request.query:
-        db[uuid]['progress'] = bottle.request.query.get('progress')
+    if 'message' in bottle.request.query:
+        db[uuid]['message'] = bottle.request.query.get('message')
     db[uuid]['time'] = int(time.time())
     db[uuid].update(netstat(db[uuid]['port']))
     d = db[uuid].copy()
