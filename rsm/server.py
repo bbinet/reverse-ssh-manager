@@ -92,7 +92,8 @@ def check(uuid):
     db[uuid]['time'] = int(time.time())
     db[uuid].update(netstat(db[uuid]['port']))
     d = db[uuid].copy()
-    db[uuid]['data'] = ''
+    if 'message' not in bottle.request.query:
+        db[uuid]['data'] = ''
     return d
 
 
