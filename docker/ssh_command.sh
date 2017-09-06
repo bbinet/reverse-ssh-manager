@@ -2,17 +2,23 @@
 
 #SSH_ORIGINAL_COMMAND="check 74cd9927-642b-4378-a4d1-000000000000 hlnew-mc-1 toto truc bidule"
 
-pattern="^\(sleep\|check\|message\) \([0-9a-f-]\{36\}\) \([0-9a-z-]*\)\(.*\)$"
-cmd=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\1/p")
-uuid=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\2/p")
-name=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\3/p")
-args=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\4/p")
-args=${args## }
-
-if [ -z "$cmd" ] || [ -z "$uuid" ] || [ -z "$name" ]
+cmd="${SSH_ORIGINAL_COMMAND%% *}"
+if [ "$cmd" != "sleep" ]
 then
-    echo "Not allowed: command validation has failed..."
-    exit 1
+
+    pattern="^\(sleep\|check\|message\) \([0-9a-f-]\{36\}\) \([0-9a-z-]*\)\(.*\)$"
+    cmd=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\1/p")
+    uuid=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\2/p")
+    name=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\3/p")
+    args=$(echo "$SSH_ORIGINAL_COMMAND" | sed -n "s/$pattern/\4/p")
+    args=${args## }
+
+    if [ -z "$cmd" ] || [ -z "$uuid" ] || [ -z "$name" ]
+    then
+        echo "Not allowed: command validation has failed..."
+        exit 1
+    fi
+
 fi
 
 case $cmd in
