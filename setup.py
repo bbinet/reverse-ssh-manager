@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reverse-ssh-manager',
-    version='1.0',
+    version='1.2',
     description='reverse-ssh-manager allows to manage reverse ssh connections '
                 'through a web application',
     long_description=open('README.rst').read(),
