@@ -1,32 +1,30 @@
-FROM debian:wheezy
+FROM debian:stretch
 
 MAINTAINER Bruno Binet <bruno.binet@helioslite.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    openssh-server python-pip build-essential python-dev libzmq1 libzmq-dev \
-    libxml2-dev libxslt1-dev curl git \
+    curl openssh-server python python-pip python-setuptools python-wheel gcc python-dev linux-libc-dev \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip install circus chaussette waitress==0.9.0 nodeenv psutil>=2.2.1
+# https://github.com/giampaolo/psutil/issues/824
+# Once psutils supports wheels on Linux, install will be:
+#RUN apt-get update && apt-get install -yq --no-install-recommends \
+#    curl openssh-server python \
+#  && rm -rf /var/lib/apt/lists/*
+#RUN curl https://bootstrap.pypa.io/get-pip.py | python
 
-RUN adduser --system --shell /bin/sh --no-create-home rsm --uid 500
+RUN pip install dumb-init reverse-ssh-manager
 
-RUN mkdir /var/run/sshd /var/log/circus
+RUN adduser --system --shell /bin/sh rsm --uid 1000
 
-RUN nodeenv --prebuilt /env
-ENV PATH /env/bin:${PATH}
-RUN npm install -g bower gulp
-
-ADD . /rsm
-WORKDIR /rsm
-RUN npm install
-RUN bower --allow-root install
-RUN gulp
-RUN pip install .
+RUN mkdir -p /var/run/sshd
+ADD docker /rsm
 
 # sshd, reverse-ssh-manager
-EXPOSE 22 8888
+EXPOSE 22 80
 
-CMD ["/usr/local/bin/circusd", "/rsm/docker/circus/circusd.ini"]
+ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+
+CMD ["bash", "-c", "/usr/sbin/sshd -f /rsm/sshd_config && exec reverse-ssh-manager /rsm/prod.cfg"]

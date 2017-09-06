@@ -44,7 +44,6 @@ Create a configuration file that looks like::
     [bottle]
     host = 0.0.0.0
     port = 8080
-    server = cherrypy
     debug = true
 
 Note that the `[bottle]` section is optional, the defaults are::
@@ -79,18 +78,9 @@ To make a new release, do the following steps::
     $ vi setup.py  # bump version
     $ git add setup.py
     $ git commit -m "bump version to X.X.X"
-    $ git dch -s <commit_hash_from_last_release>
-    $ vi debian/changelog  # edit changelog
-    $ git add debian/changelog
-    $ git ci -m "update debian changelog to version X.X.X+hl~1"
-    $ ../pdebuild.sh build reverse-ssh-manager
-
-If debian package was correctly generated, you can create a tag in git, and
-push the debian package to reprepro with dput::
-
     $ git tag vX.X.X
+    $ python setup.py sdist bdist_wheel upload
     $ git push --tags
-    $ dput kimsufi /home/bruno/dev/build/reverse-ssh-manager/amd64/reverse-ssh-manager_X.X.X+hl~1_amd64.changes
 
 
 Docker
@@ -111,7 +101,7 @@ Run
 ~~~
 
 Then, when starting your rsm container, you will want to bind ports `22` and
-`8888` from the rsm container to a host external port.
+`80` from the rsm container to a host external port.
 
 You also need to provide a read-only `authorized_keys` file that will be use to
 allow some users to create ssh tunnels using their public ssh key.
