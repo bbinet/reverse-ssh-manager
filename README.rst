@@ -109,12 +109,18 @@ allow some users to create ssh tunnels using their public ssh key.
 Note that psutil won't be able to get pids of running ssh connection unless you
 specify option `--cap-add SYS_PTRACE` with docker run.
 
+If you want to override ssh HostKey file, you can use the `HOST_KEY`
+environment variable to give the path to the ssh host key you can provide
+through a docker volume.
+
 For example:
 
     $ docker pull bbinet/rsm
 
     $ docker run --name rsm \
-        -v authorized_keys:/config/authorized_keys:ro \
+        -v authorized_keys:/etc/ssh/authorized_keys:ro \
+        -v own_ssh_host_rsa_key:/etc/ssh/own_ssh_host_rsa_key:ro \
+        -e HOST_KEY="/etc/ssh/own_ssh_host_rsa_key"
         -p 22:22 \
         --cap-add SYS_PTRACE \
         bbinet/rsm
