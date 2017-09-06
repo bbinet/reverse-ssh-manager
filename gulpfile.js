@@ -1,9 +1,15 @@
 var gulp = require('gulp');
+var del = require('del');
+var runSequence = require('run-sequence');
 var jshint = require('gulp-jshint');
 var usemin = require('gulp-usemin');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rev = require('gulp-rev');
+
+gulp.task('del', function(cb) {
+  del('rsm/static/**', cb);
+});
 
 gulp.task('lint', function() {
   gulp.src(['static/js/*.js'])
@@ -22,13 +28,16 @@ gulp.task('usemin', function() {
     .pipe(gulp.dest('rsm/static'));
 });
 
-gulp.task('fonts', function() {
-  gulp.src('static/vendor/bootstrap/fonts/*')
+gulp.task('bootstrap-fonts', function() {
+  gulp.src('static/vendor/bootstrap/dist/fonts/*')
     .pipe(gulp.dest('rsm/static/fonts'));
 });
+
 gulp.task('img', function() {
   gulp.src('static/img/*')
     .pipe(gulp.dest('rsm/static/img'));
 });
 
-gulp.task('default', ['usemin', 'img', 'fonts', 'lint']);
+gulp.task('default', function() {
+  runSequence('del', ['usemin', 'img', 'bootstrap-fonts', 'lint']);
+});
