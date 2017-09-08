@@ -28,4 +28,6 @@ EXPOSE 22 80
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
 ENV HOST_KEY /etc/ssh/ssh_host_rsa_key
-CMD ["bash", "-c", "/usr/sbin/sshd -f /rsm/sshd_config -h $HOST_KEY && exec reverse-ssh-manager /rsm/prod.cfg"]
+ENV AUTHORIZED_KEYS_FILE /etc/ssh/authorized_keys
+
+CMD ["bash", "-c", "/usr/sbin/sshd -f /rsm/sshd_config -h $HOST_KEY -o AuthorizedKeysFile=$AUTHORIZED_KEYS_FILE && exec reverse-ssh-manager /rsm/prod.cfg"]
