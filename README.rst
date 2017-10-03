@@ -120,7 +120,7 @@ For example:
     $ docker run --name rsm \
         -v authorized_keys:/etc/ssh/authorized_keys:ro \
         -v own_ssh_host_rsa_key:/etc/ssh/own_ssh_host_rsa_key:ro \
-        -e HOST_KEY="/etc/ssh/own_ssh_host_rsa_key"
+        -e HOST_KEY="/etc/ssh/own_ssh_host_rsa_key" \
         -p 22:22 \
         --cap-add SYS_PTRACE \
         bbinet/reverse-ssh-manager
