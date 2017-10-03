@@ -89,13 +89,13 @@ Docker
 Build
 ~~~~~
 
-To create the image `bbinet/rsm`, execute the following command::
+To create the image `bbinet/reverse-ssh-manager`, execute the following command::
 
-    docker build -t bbinet/rsm .
+    docker build -t bbinet/reverse-ssh-manager .
 
 You can now push the new image to the public registry::
 
-    docker push bbinet/rsm
+    docker push bbinet/reverse-ssh-manager
 
 Run
 ~~~
@@ -115,12 +115,12 @@ through a docker volume.
 
 For example:
 
-    $ docker pull bbinet/rsm
+    $ docker pull bbinet/reverse-ssh-manager
 
     $ docker run --name rsm \
         -v authorized_keys:/etc/ssh/authorized_keys:ro \
         -v own_ssh_host_rsa_key:/etc/ssh/own_ssh_host_rsa_key:ro \
-        -e HOST_KEY="/etc/ssh/own_ssh_host_rsa_key"
+        -e HOST_KEY="/etc/ssh/own_ssh_host_rsa_key" \
         -p 22:22 \
         --cap-add SYS_PTRACE \
-        bbinet/rsm
+        bbinet/reverse-ssh-manager
